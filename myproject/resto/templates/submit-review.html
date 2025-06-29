@@ -1,0 +1,15 @@
+{% if user.is_authenticated %}
+<div class="mt-5">
+    <form action="{% url 'submit_review' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <textarea name="message" class="form-control" rows="4" placeholder="Write your review..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+</div>
+{% else %}
+<p class="text-center mt-4">
+    <a href="{% url 'login' %}?next={% url 'testimonial' %}">Log in</a> to write a review.
+</p>
+{% endif %}

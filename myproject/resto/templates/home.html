@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home - Ishu Restaurant{% endblock %}
+
+
+{% block slider %}
+
+
+        
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container my-5 py-5">
+                    <div class="row align-items-center g-5">
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <h1 class="display-3 text-white animated slideInLeft">Enjoy Our<br>Delicious Meal</h1>
+                            <p class="text-white animated slideInLeft mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                            <a href="{% url 'booking'%}" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Book A Table</a>
+                        </div>
+                        <div class="col-lg-6 text-center text-lg-end overflow-hidden">
+                            <img class="img-fluid" src="{% static 'img/hero.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+        
+{% endblock %}
+
+{% block content %}
+    <!-- Service Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
+                                <h5>Master Chefs</h5>
+                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-utensils text-primary mb-4"></i>
+                                <h5>Quality Food</h5>
+                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-cart-plus text-primary mb-4"></i>
+                                <h5>Online Order</h5>
+                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-headset text-primary mb-4"></i>
+                                <h5>24/7 Service</h5>
+                                <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Service End -->
+
+
+
+<!-- Menu Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Food Menu</h5>
+            <h1 class="mb-5">Most Popular Items</h1>
+        </div>
+
+        <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.1s">
+            <!-- Tab Navigation -->
+            <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
+                {% for i in categories %}
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center text-start mx-3 {% if forloop.first %}ms-0 pb-3 active{% else %}pb-3{% endif %}" 
+                           data-bs-toggle="pill" 
+                           href="#tab-{{ forloop.counter }}">
+                            <i class="fa fa-coffee fa-2x text-primary"></i>
+                            <div class="ps-3">
+                                <small class="text-body">{{ i.category_name }}</small>
+                                <h6 class="mt-n1 mb-0">{{ i.item_cat }}</h6>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                {% for cat in categories %}
+                    <div id="tab-{{ forloop.counter }}" class="tab-pane fade show p-0 {% if forloop.first %}active{% endif %}">
+                        <div class="row g-4">
+                            {% for item in cat.items.all %}
+                                <div class="col-lg-6">
+                                    <div class="d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid rounded" src="{{ item.image.url }}" alt="" style="width: 80px;">
+                                        <div class="w-100 d-flex flex-column text-start ps-4">
+                                            <h5 class="d-flex justify-content-between border-bottom pb-2">
+                                                <span>{{ item.item_name }}</span>
+                                                <span class="text-primary">₹{{ item.price }}</span>
+                                            </h5>
+                                            <small class="fst-italic">{{ item.description }}</small>
+                                            <div class="mt-2">
+                                                <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary btn-sm">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p class="text-center">No items found in {{ cat.category_name }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Menu End -->
+
+
+        <!-- Reservation Start -->
+        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <div class="video">
+                            <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/pq0FUpeopJQ" data-bs-target="#videoModal">
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 bg-dark d-flex align-items-center">
+                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
+                        <h1 class="text-white mb-4">Book A Table Online</h1>
+                        
+                <form method="POST" action="{% url 'booking' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" name = "name" placeholder="Your Name" required>
+                                        <label for="name">Your Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                                        <label for="email">Your Email</label>
+                                    </div>
+                                </div>
+                               <!-- Date input -->
+
+                               <div class="col-md-6">
+    <div class="form-floating" id="date-picker">
+        <input type="date" class="form-control" id="date" name="date" placeholder="Date" required>
+        <label for="date">Date</label>
+    </div>
+</div>
+
+<!-- Time input -->
+<div class="col-md-6">
+    <div class="form-floating" id="time-picker">
+        <input type="time" class="form-control" id="time" name="time" placeholder="Time" required>
+        <label for="time">Time</label>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-floating" id="time-picker">
+        <input class="form-control" id="number" name="number" placeholder="Phone No: " required>
+        <label for="number">Contact Number</label>
+    </div>
+</div>
+                               <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="select1" name="people" required>
+                                          <option value="1">People 1</option>
+                                          <option value="2">People 2</option>
+                                          <option value="3">People 3</option>
+                                          <option value="3">People 4</option>
+                                          <option value="3">People 5</option>
+                                        </select>
+                                        <label for="select1">No Of People</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea  class="form-control " name="request" name = "request" placeholder="Special Request" id="message" style="height: 100px; resize: none" required></textarea>
+                                        <label for="message">Special Request</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 16:9 aspect ratio -->
+                        <div class="ratio ratio-16x9">
+                            <iframe class="embed-responsive-item" src="" id="video" allowfullscreen
+                                allow="autoplay"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Reservation Start -->
+
+ 
+        
+
+
+        <!-- Testimonial Start -->
+             <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <div class="text-center">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Review</h5>
+                    <h1 class="mb-5">Our Clients Say!!!</h1>
+                </div>
+                <div class="owl-carousel testimonial-carousel">
+                    {% for review in reviews %}
+    
+                    <div class="testimonial-item bg-transparent border rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>{{review.message}}</p>
+                        <div class="d-flex align-items-center">
+                            
+                            <div class="ps-3">
+                                <h5 class="mb-1">{{ review.user.first_name }} {{ review.user.last_name }}</h5>
+                                {% comment %} <small>Profession</small> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p class="text-center">No reviews available.</p>
+                    {% endfor %}
+                </div>
+
+
+
+                <div class="text-center mt-4">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Write a Review</h5>
+                    <h1 class="mb-5">We value your feedback!</h1>
+                {% if user.is_authenticated %}
+<div class="mt-5">
+    <form action="{% url 'submit_review' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <textarea name="message" class="form-control" rows="4" placeholder="Write your review..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+</div>
+{% else %}
+<p class="text-center mt-4">
+    <a href="{% url 'login' %}?next={% url 'testimonial' %}">Log in</a> to write a review.
+</p>
+{% endif %}
+            </div>
+        </div>
+        <!-- Testimonial End -->
+
+
+
+ {% endblock %}

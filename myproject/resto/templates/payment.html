@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block slider %}
+
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container text-center my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Payment</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center text-uppercase">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">Payment</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Payment</h2>
+
+    {% if cart_items %}
+    <div class="table-responsive mb-4">
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Image</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td><img src="{{ item.item.image.url }}" width="70" height="70" class="rounded" alt="{{ item.item.item_name }}"></td>
+                    <td>{{ item.item.item_name }}</td>
+                    <td>₹{{ item.item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </table>
+        <h4 class="text-end">Total: ₹{{ total_price }}</h4>
+    </table>
+
+    <!-- Razorpay Payment Button -->
+  
+
+    <form action="{% url 'payment_handler' %}" method="POST">
+  {% csrf_token %}
+  <script
+    src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="{{ razorpay_key }}"
+    data-amount="{{ amount }}"
+    data-currency="INR"
+    data-order_id="{{ order_id }}"
+    data-buttontext="Pay with Razorpay"
+    data-name="My Restaurant"
+    data-description="Payment for Food Order"
+    data-theme.color="#0d6efd"
+  ></script>
+</form>
+
+
+
+
+
+    {% else %}
+    <p class="text-center">Your cart is empty. <a href="{% url 'menu' %}">Go to Menu</a></p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact - Ishu Restaurant{% endblock %}
+
+{% block slider %}
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Contact Us</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            {% comment %} <li class="breadcrumb-item"><a href="#">Pages</a></li> {% endcomment %}
+                            <li class="breadcrumb-item text-white active" aria-current="page">Contact</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<!-- Flash Messages -->
+{% if messages %}
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div class="toast-container position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1100;">
+    {% for message in messages %}
+    <div class="toast text-white fw-bold text-center bg-{{ message.tags }} show" role="alert" aria-live="assertive" aria-atomic="true" style="min-width: 300px;">
+      <div class="d-flex">
+        <div class="toast-body w-100">
+          {{ message }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+
+        <!-- Contact Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Contact Us</h5>
+                    <h1 class="mb-5">Contact For Any Query</h1>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="row gy-4">
+                            <div class="col-md-4">
+                                <h5 class="section-title ff-secondary fw-normal text-start text-primary">Booking</h5>
+                                <p><i class="fa fa-envelope-open text-primary me-2"></i>book@example.com</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="section-title ff-secondary fw-normal text-start text-primary">General</h5>
+                                <p><i class="fa fa-envelope-open text-primary me-2"></i>info@example.com</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="section-title ff-secondary fw-normal text-start text-primary">Technical</h5>
+                                <p><i class="fa fa-envelope-open text-primary me-2"></i>tech@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+    <iframe class="position-relative rounded w-100 h-100"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14768.625008413244!2d79.92197331290517!3d23.181467024013604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3981ae41b9d796ef%3A0x9d6f20df011f2c8!2sJabalpur%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1715941992972!5m2!1sen!2sin"
+        frameborder="0" style="min-height: 350px; border:0;" allowfullscreen="" aria-hidden="false"
+        tabindex="0">
+    </iframe>
+</div>
+
+<div class="col-md-6 wow fadeIn" data-wow-delay="0.3s">
+    <form method="POST" action="{% url 'contact' %}">
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required>
+                    <label for="name">Your Name</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                    <label for="email">Your Email</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                    <label for="subject">Subject</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea class="form-control" name="message" placeholder="Leave a message here"
+                        id="message" style="height: 150px" required></textarea>
+                    <label for="message">Message</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+        <!-- Contact End -->
+
+{% endblock %}
